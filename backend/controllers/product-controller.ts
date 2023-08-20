@@ -26,3 +26,9 @@ export const executeDeleteProduct: RequestHandler = async (req, res): Promise<an
   const product = await service.deleteProduct(id);
   return !!product ? ok<ProductProps>(res, product) : notFound(res);
 };
+
+export const executeAddProduct: RequestHandler = async (req, res): Promise<any> => {
+  const { body } = req;
+  const product = await service.addProduct(body);
+  return !!product ? ok<ProductProps>(res, product) : notFound(res);
+};

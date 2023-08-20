@@ -9,7 +9,7 @@ import {
   MDBTableHead,
 } from "mdb-react-ui-kit";
 
-const EditModal: FC = (): JSX.Element => {
+const DeleteModal: FC = (): JSX.Element => {
   const [product, setProduct] = useState<IProduct>(null);
   const [isLoading, setIsLoading] = useState(null);
   const { deleteId } = useContext<ProductTableAdminContext>(
@@ -78,4 +78,4 @@ const EditModal: FC = (): JSX.Element => {
   );
 };
 
-export default EditModal;
+export default DeleteModal;

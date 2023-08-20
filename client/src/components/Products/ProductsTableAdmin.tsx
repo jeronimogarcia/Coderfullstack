@@ -10,8 +10,13 @@ type Props = {
 };
 
 const ProductsTable: FC<Props> = ({ products }): JSX.Element => {
-  const { setTableEditModal, setEditId, setTableDeleteModal, setDeleteId } =
-    useContext<ProductTableAdminContext>(ProductTableAdminContext);
+  const {
+    setTableEditModal,
+    setEditId,
+    setTableDeleteModal,
+    setDeleteId,
+    setTableAddModal,
+  } = useContext<ProductTableAdminContext>(ProductTableAdminContext);
   return (
     <div style={{ justifyContent: "center" }}>
       <h1 style={{ textAlign: "center", marginTop: "40px" }}>
@@ -79,6 +84,22 @@ const ProductsTable: FC<Props> = ({ products }): JSX.Element => {
               ))}
             </MDBTableBody>
           </MDBTable>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              margin: "20px",
+            }}
+          >
+            <CustomButton
+              onClick={() => {
+                setTableAddModal(true);
+              }}
+              width="150px"
+              label="Add Product"
+              color="primary"
+            />
+          </div>
           <TableModalContainer />
         </section>
       </div>

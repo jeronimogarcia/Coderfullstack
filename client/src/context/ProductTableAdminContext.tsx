@@ -19,10 +19,23 @@ interface ProductTableAdminContext {
   tableDeleteModal: boolean;
   setTableDeleteModal: Dispatch<SetStateAction<boolean>>;
   deleteProduct: () => void;
+  tableAddModal: boolean;
+  setTableAddModal: Dispatch<SetStateAction<boolean>>;
+  addObject: AddObject;
+  setAddObject: Dispatch<SetStateAction<AddObject>>;
+  addProduct: () => void;
 }
 
 export type EditObject = {
   title: string;
+  price: number;
+  stock: number;
+};
+
+export type AddObject = {
+  title: string;
+  description: string;
+  category: string;
   price: number;
   stock: number;
 };
@@ -33,10 +46,18 @@ export const ProductTableAdminContextProvider = ({ children }) => {
   const [data, setData] = useState<IProduct[]>([]);
   const [tableEditModal, setTableEditModal] = useState(false);
   const [tableDeleteModal, setTableDeleteModal] = useState(false);
+  const [tableAddModal, setTableAddModal] = useState(false);
   const [editId, setEditId] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
   const [editObject, setEditObject] = useState<EditObject>({
     title: "",
+    price: null,
+    stock: null,
+  });
+  const [addObject, setAddObject] = useState<AddObject>({
+    title: "",
+    description: "",
+    category: "",
     price: null,
     stock: null,
   });
@@ -82,6 +103,19 @@ export const ProductTableAdminContextProvider = ({ children }) => {
     }
   };
 
+  const addProduct = async () => {
+    try {
+      await axios.post(`http://localhost:5000/products/add`, addObject);
+      toast.success("Producto creado correctamente");
+    } catch (error) {
+      console.log(error);
+      toast.error("Error al crear producto");
+    } finally {
+      setTableAddModal(null);
+      fetchProducts();
+    }
+  };
+
   return (
     <ProductTableAdminContext.Provider
       value={{
@@ -102,6 +136,11 @@ export const ProductTableAdminContextProvider = ({ children }) => {
         tableDeleteModal,
         setTableDeleteModal,
         deleteProduct,
+        tableAddModal,
+        setTableAddModal,
+        addObject,
+        setAddObject,
+        addProduct,
       }}
     >
       {children}

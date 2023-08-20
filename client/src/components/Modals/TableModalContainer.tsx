@@ -4,6 +4,7 @@ import EditModal from "./EditModal";
 import { useContext } from "react";
 import ProductTableAdminContext from "../../context/ProductTableAdminContext";
 import DeleteModal from "./DeleteModal";
+import AddModal from "./AddModal";
 
 const TableModalContainer = () => {
   const {
@@ -13,6 +14,9 @@ const TableModalContainer = () => {
     tableDeleteModal,
     setTableDeleteModal,
     deleteProduct,
+    tableAddModal,
+    setTableAddModal,
+    addProduct,
   } = useContext<ProductTableAdminContext>(ProductTableAdminContext);
   return (
     <div>
@@ -36,12 +40,30 @@ const TableModalContainer = () => {
           setShowModal={setTableDeleteModal}
           title="Delete Product"
           buttons={[
-            <MDBBtn color="danger" key={"edit button"} onClick={deleteProduct}>
+            <MDBBtn
+              color="danger"
+              key={"delete button"}
+              onClick={deleteProduct}
+            >
               Delete
             </MDBBtn>,
           ]}
         >
           <DeleteModal />
+        </MainModal>
+      )}
+      {tableAddModal && (
+        <MainModal
+          showModal={tableAddModal}
+          setShowModal={setTableAddModal}
+          title="Add Product"
+          buttons={[
+            <MDBBtn key={"add button"} onClick={addProduct}>
+              Add
+            </MDBBtn>,
+          ]}
+        >
+          <AddModal />
         </MainModal>
       )}
     </div>
