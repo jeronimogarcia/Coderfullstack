@@ -6,5 +6,5 @@ export const addUser = async (user: addUserObj) => {
 };
 
 export const findUserByEmail = async (filter: Record<string, unknown>) => {
-  return await Usuarios.find(filter);
+  return await Usuarios.findOne(filter);
 };

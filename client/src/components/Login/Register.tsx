@@ -58,6 +58,7 @@ const Register: FC = (): JSX.Element => {
           display: "flex",
           justifyContent: "center",
           background: "grey",
+          height: "100vh",
         }}
       >
         <div
@@ -69,6 +70,7 @@ const Register: FC = (): JSX.Element => {
             background: "#EEE",
             borderTopLeftRadius: "60px",
             borderBottomRightRadius: "60px",
+            height: "fit-content",
           }}
         >
           <form
