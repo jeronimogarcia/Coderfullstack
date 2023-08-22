@@ -16,10 +16,10 @@ const Navbar: FC = (): JSX.Element => {
               <Link to="/">Home</Link>
             </MDBBreadcrumbItem>
             <MDBBreadcrumbItem>
-              <Link to="/">Library</Link>
+              <Link to="/admin/products">Product Manager</Link>
             </MDBBreadcrumbItem>
             <MDBBreadcrumbItem active aria-current="page">
-              <Link to="/">Data</Link>
+              <Link to="/register">Register</Link>
             </MDBBreadcrumbItem>
           </MDBBreadcrumb>
         </nav>

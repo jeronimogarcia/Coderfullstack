@@ -1,6 +1,7 @@
 import { FC } from "react";
-import AllProductsFetch from "./components/Products/AllProductsFetch";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AllProductsFetch from "./components/Products/AllProductsFetch";
+import Register from "./components/Login/Register";
 
 const App: FC = (): JSX.Element => {
   return (
@@ -8,6 +9,7 @@ const App: FC = (): JSX.Element => {
       <Routes>
         <Route path="/" element={<AllProductsFetch />}></Route>
         <Route path="/admin/products" element={<AllProductsFetch />}></Route>
+        <Route path="/register" element={<Register />}></Route>
       </Routes>
     </BrowserRouter>
   );
