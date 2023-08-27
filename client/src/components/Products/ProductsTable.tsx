@@ -1,12 +1,17 @@
 import { MDBTable, MDBTableHead, MDBTableBody } from "mdb-react-ui-kit";
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { IProduct } from "../../types/Product";
+import CustomButton from "../Buttons/CustomButton";
+import UserTableModalContainer from "../Modals/UserTableModalContainer";
+import CartContext from "../../context/CartContext";
 
 type Props = {
   products: IProduct[];
 };
 
 const ProductsTable: FC<Props> = ({ products }): JSX.Element => {
+  const { setTableAddToCartModal, setProductInCart } =
+    useContext<CartContext>(CartContext);
   return (
     <div style={{ justifyContent: "center" }}>
       <h1 style={{ textAlign: "center", marginTop: "40px" }}>Products List</h1>
@@ -31,6 +36,7 @@ const ProductsTable: FC<Props> = ({ products }): JSX.Element => {
                 <th scope="col">Product</th>
                 <th scope="col">Price</th>
                 <th scope="col">Stock</th>
+                <th scope="col" style={{ width: "20px" }}></th>
               </tr>
             </MDBTableHead>
             <MDBTableBody>
@@ -39,12 +45,22 @@ const ProductsTable: FC<Props> = ({ products }): JSX.Element => {
                   <td>{product.title}</td>
                   <td>${product.price}</td>
                   <td>{product.stock}u</td>
+                  <td>
+                    <CustomButton
+                      onClick={() => {
+                        setTableAddToCartModal(true);
+                        setProductInCart(product);
+                      }}
+                      label="Add"
+                    />
+                  </td>
                 </tr>
               ))}
             </MDBTableBody>
           </MDBTable>
         </section>
       </div>
+      <UserTableModalContainer />
     </div>
   );
 };

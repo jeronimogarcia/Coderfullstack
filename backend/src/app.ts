@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import { COOKIESECRET } from '../src/server';
 import passport from 'passport';
 import { initPassport } from '../auth/passport.config';
+import carritos from '../routes/Cart';
 
 const corsOptions = {
   //To allow requests from client. Cookie set in browser
@@ -24,5 +25,6 @@ app.use(passport.initialize());
 
 app.use(product);
 app.use(user);
+app.use(carritos);
 
 export default app;

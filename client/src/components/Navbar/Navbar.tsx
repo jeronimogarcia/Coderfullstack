@@ -24,6 +24,9 @@ const Navbar: FC = (): JSX.Element => {
             <MDBBreadcrumbItem active aria-current="page">
               <Link to="/login">Login</Link>
             </MDBBreadcrumbItem>
+            <MDBBreadcrumbItem active aria-current="page">
+              <Link to="/cart">Cart</Link>
+            </MDBBreadcrumbItem>
           </MDBBreadcrumb>
         </nav>
       </MDBContainer>

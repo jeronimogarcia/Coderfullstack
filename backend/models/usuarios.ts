@@ -1,5 +1,4 @@
-import { Model, Schema, Types, model, models } from 'mongoose';
-import { CarritosProps } from './carritos';
+import { Model, Schema, model, models } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 export interface UsuariosProps {
@@ -8,7 +7,6 @@ export interface UsuariosProps {
   password: string;
   email: string;
   role?: UsersRoleEnum;
-  carts?: (Types.ObjectId | CarritosProps)[];
   created?: Date;
 }
 
@@ -23,7 +21,6 @@ const productSchema = new Schema<UsuariosProps>({
   password: { type: String, required: true },
   email: { type: String, required: true },
   role: { type: String, enum: Object.values(UsersRoleEnum) },
-  carts: [{ type: Schema.Types.ObjectId, ref: 'Carritos' }],
   created: { type: Date },
 });
 
@@ -31,7 +28,6 @@ productSchema.pre('save', async function (next) {
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
   this.role = UsersRoleEnum.USER;
-  this.carts = [];
   this.created = new Date();
 });
 

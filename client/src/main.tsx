@@ -6,13 +6,16 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./index.css";
 import { ProductTableAdminContextProvider } from "./context/ProductTableAdminContext.tsx";
 import { AuthContextProvider } from "./context/AuthContext.tsx";
+import { CartContextProvider } from "./context/CartContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <AuthContextProvider>
-      <ProductTableAdminContextProvider>
-        <App />
-      </ProductTableAdminContextProvider>
+      <CartContextProvider>
+        <ProductTableAdminContextProvider>
+          <App />
+        </ProductTableAdminContextProvider>
+      </CartContextProvider>
     </AuthContextProvider>
   </React.StrictMode>
 );

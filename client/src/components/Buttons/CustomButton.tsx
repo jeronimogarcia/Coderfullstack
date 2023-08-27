@@ -3,7 +3,7 @@ import { FC } from "react";
 import "react-toastify/dist/ReactToastify.css";
 
 type Props = {
-  label: string;
+  label: string | JSX.Element;
   color?:
     | "primary"
     | "secondary"
