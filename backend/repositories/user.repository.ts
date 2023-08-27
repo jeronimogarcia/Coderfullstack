@@ -8,3 +8,7 @@ export const addUser = async (user: addUserObj) => {
 export const findUserByEmail = async (filter: Record<string, unknown>) => {
   return await Usuarios.findOne(filter);
 };
+
+export const findUserWithId = async (id: string) => {
+  return await Usuarios.findById(id).select('-password');
+};

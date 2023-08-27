@@ -1,5 +1,7 @@
+import { JwtPayload } from 'jsonwebtoken';
 import * as repo from '../repositories/user.repository';
 import { addUserObj } from '../types/addUserObj';
+import { decodeJWT } from '../utils/decodeJWT';
 import { matchPassword } from '../utils/matchPassword';
 
 export const addUser = async (user: addUserObj): Promise<any> => {
@@ -27,5 +29,14 @@ export const loginUser = async (user: addUserObj): Promise<any> => {
   } catch (error) {
     console.error('Error during logging', error);
     return null;
+  }
+};
+
+export const getUserWithToken = async (token: string): Promise<any> => {
+  try {
+    const payload = decodeJWT(token);
+    return await repo.findUserWithId((payload as Record<string, unknown>).id as string);
+  } catch (error) {
+    console.log(error);
   }
 };

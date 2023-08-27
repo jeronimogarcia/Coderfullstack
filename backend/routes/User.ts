@@ -1,7 +1,8 @@
 import { Router } from 'express';
-import { executeAddUser, executeLoginUser } from '../controllers/user-controller';
+import { executeAddUser, executeLoginUser, executeGetUserWithToken } from '../controllers/user-controller';
 const router = Router();
 
+router.get('/users/token/:token', executeGetUserWithToken);
 router.post('/users/login', executeLoginUser);
 router.post('/users/register', executeAddUser);
 

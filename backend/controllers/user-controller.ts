@@ -29,3 +29,13 @@ export const executeLoginUser: RequestHandler = async (req, res): Promise<any> =
     notFound(res);
   }
 };
+
+export const executeGetUserWithToken: RequestHandler = async (req, res): Promise<any> => {
+  const { token } = req.params;
+  if (token != 'null') {
+    const user = await service.getUserWithToken(token);
+    return !!user ? ok<Partial<UsuariosProps>>(res, user) : notFound(res);
+  } else {
+    return null;
+  }
+};

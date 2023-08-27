@@ -6,23 +6,32 @@ import {
   useEffect,
 } from "react";
 import { IUser } from "../types/User";
+import axios from "axios";
 
 interface AuthContext {
   userContext: IUser;
   setUserContext: Dispatch<SetStateAction<IUser>>;
-  token: string;
-  setToken: Dispatch<SetStateAction<string>>;
 }
 
 const AuthContext = createContext(null);
 
 export const AuthContextProvider = ({ children }) => {
   const [userContext, setUserContext] = useState(null);
-  const [token, setToken] = useState(null);
+
+  const getUser = async () => {
+    const token = localStorage.getItem("TOKEN");
+    try {
+      const user = await axios.get(
+        `http://localhost:5000/users/token/${token}`
+      );
+      setUserContext(user.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const token = localStorage.getItem("TOKEN");
-    if (token) setToken(token);
+    getUser();
   }, []);
 
   return (
@@ -30,7 +39,6 @@ export const AuthContextProvider = ({ children }) => {
       value={{
         userContext,
         setUserContext,
-        token,
       }}
     >
       {children}
