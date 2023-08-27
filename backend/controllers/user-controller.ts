@@ -16,14 +16,7 @@ export const executeLoginUser: RequestHandler = async (req, res): Promise<any> =
 
   if (user) {
     const date = new Date();
-
-    const userdataForToken = {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      userEmail: user.email,
-      role: user.role,
-    };
-    const token = generateToken(userdataForToken, '24h');
+    const token = generateToken(user._id, '24h');
 
     res.cookie('coder_login_token', token, {
       maxAge: date.setDate(date.getDate() + 1),
@@ -31,7 +24,7 @@ export const executeLoginUser: RequestHandler = async (req, res): Promise<any> =
       httpOnly: true,
     });
 
-    ok<UsuariosProps>(res, user);
+    ok<any>(res, { user, token });
   } else {
     notFound(res);
   }

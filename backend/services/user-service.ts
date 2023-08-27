@@ -19,7 +19,8 @@ export const loginUser = async (user: addUserObj): Promise<any> => {
   try {
     const getUser = await repo.findUserByEmail(filter);
     if (getUser && (await matchPassword(user.password, getUser.password))) {
-      return getUser;
+      const userWithoutPassword = { ...getUser.toObject(), password: undefined };
+      return userWithoutPassword;
     } else {
       return null;
     }

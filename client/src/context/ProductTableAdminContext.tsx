@@ -64,8 +64,14 @@ export const ProductTableAdminContextProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
 
   const fetchProducts = async () => {
+    const token = localStorage.getItem("TOKEN");
     try {
-      const { data } = await axios.get("http://localhost:5000/products");
+      const { data } = await axios.get(`http://localhost:5000/products`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setProducts(data.data);
     } catch (e) {
       console.log(e);
@@ -91,7 +97,7 @@ export const ProductTableAdminContextProvider = ({ children }) => {
 
   const deleteProduct = async () => {
     try {
-      await axios.delete(`http://localhost:5000/products/delete/${editId}`);
+      await axios.delete(`http://localhost:5000/products/delete/${deleteId}`);
       toast.success("Producto eliminado correctamente");
     } catch (error) {
       console.log(error);

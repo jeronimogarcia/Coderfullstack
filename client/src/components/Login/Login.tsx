@@ -1,9 +1,10 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import MainLayout from "../Layouts/MainLayout";
 import { useForm } from "react-hook-form";
 import { MDBBtn, MDBCol, MDBInput, MDBRow } from "mdb-react-ui-kit";
 import axios from "axios";
 import { toast } from "react-toastify";
+import AuthContext from "../../context/AuthContext";
 
 interface IFormInputs {
   email: string;
@@ -11,6 +12,7 @@ interface IFormInputs {
 }
 
 const Login: FC = (): JSX.Element => {
+  const { setUserContext } = useContext<AuthContext>(AuthContext);
   const {
     register,
     handleSubmit,
@@ -32,9 +34,12 @@ const Login: FC = (): JSX.Element => {
       const userLog = await axios.post(
         "http://localhost:5000/users/login",
         user,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+        }
       );
-      console.log(userLog.data.data);
+      localStorage.setItem("TOKEN", userLog.data.data.token);
+      setUserContext(userLog.data.data.user);
       toast.success("Usuario logeado correctamente");
     } catch (error) {
       console.log(error);
