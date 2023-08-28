@@ -4,13 +4,17 @@ import AllProductsFetch from "./components/Products/AllProductsFetch";
 import Register from "./components/Login/Register";
 import Login from "./components/Login/Login";
 import CartView from "./components/Cart/CartView";
+import AllProductsFetchAdmin from "./components/Products/AllProductsFetchAdmin";
 
 const App: FC = (): JSX.Element => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<AllProductsFetch />}></Route>
-        <Route path="/admin/products" element={<AllProductsFetch />}></Route>
+        <Route
+          path="/admin/products"
+          element={<AllProductsFetchAdmin />}
+        ></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/cart" element={<CartView />}></Route>

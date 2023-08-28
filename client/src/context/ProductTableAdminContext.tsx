@@ -24,6 +24,9 @@ interface ProductTableAdminContext {
   addObject: AddObject;
   setAddObject: Dispatch<SetStateAction<AddObject>>;
   addProduct: () => void;
+  fetchProductsAdmin: () => void;
+  productsAdmin: IProduct[];
+  setProductsAdmin: Dispatch<SetStateAction<IProduct[]>>;
 }
 
 export type EditObject = {
@@ -62,6 +65,7 @@ export const ProductTableAdminContextProvider = ({ children }) => {
     stock: null,
   });
   const [products, setProducts] = useState([]);
+  const [productsAdmin, setProductsAdmin] = useState([]);
 
   const fetchProducts = async () => {
     const token = localStorage.getItem("TOKEN");
@@ -78,11 +82,33 @@ export const ProductTableAdminContextProvider = ({ children }) => {
     }
   };
 
+  const fetchProductsAdmin = async () => {
+    const token = localStorage.getItem("TOKEN");
+    try {
+      const { data } = await axios.get(`http://localhost:5000/products/admin`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setProductsAdmin(data.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const editProduct = async () => {
+    const token = localStorage.getItem("TOKEN");
     try {
       await axios.post(
         `http://localhost:5000/products/edit/${editId}`,
-        editObject
+        editObject,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       toast.success("Producto editado correctamente");
     } catch (error) {
@@ -91,13 +117,19 @@ export const ProductTableAdminContextProvider = ({ children }) => {
     } finally {
       setEditId(null);
       setTableEditModal(null);
-      fetchProducts();
+      fetchProductsAdmin();
     }
   };
 
   const deleteProduct = async () => {
+    const token = localStorage.getItem("TOKEN");
     try {
-      await axios.delete(`http://localhost:5000/products/delete/${deleteId}`);
+      await axios.delete(`http://localhost:5000/products/delete/${deleteId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       toast.success("Producto eliminado correctamente");
     } catch (error) {
       console.log(error);
@@ -105,20 +137,26 @@ export const ProductTableAdminContextProvider = ({ children }) => {
     } finally {
       setDeleteId(null);
       setTableDeleteModal(null);
-      fetchProducts();
+      fetchProductsAdmin();
     }
   };
 
   const addProduct = async () => {
+    const token = localStorage.getItem("TOKEN");
     try {
-      await axios.post(`http://localhost:5000/products/add`, addObject);
+      await axios.post(`http://localhost:5000/products/add`, addObject, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       toast.success("Producto creado correctamente");
     } catch (error) {
       console.log(error);
       toast.error("Error al crear producto");
     } finally {
       setTableAddModal(null);
-      fetchProducts();
+      fetchProductsAdmin();
     }
   };
 
@@ -147,6 +185,9 @@ export const ProductTableAdminContextProvider = ({ children }) => {
         addObject,
         setAddObject,
         addProduct,
+        fetchProductsAdmin,
+        productsAdmin,
+        setProductsAdmin,
       }}
     >
       {children}

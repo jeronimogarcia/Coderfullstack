@@ -1,20 +1,21 @@
 import { FC, useEffect, useContext } from "react";
-import ProductsTable from "./ProductsTable";
 import MainLayout from "../Layouts/MainLayout";
+import ProductsTableAdmin from "./ProductsTableAdmin";
 import ProductTableAdminContext from "../../context/ProductTableAdminContext";
 
 const AllProductsFetch: FC = (): JSX.Element => {
-  const { products, fetchProducts } = useContext<ProductTableAdminContext>(
-    ProductTableAdminContext
-  );
+  const { productsAdmin, fetchProductsAdmin } =
+    useContext<ProductTableAdminContext>(ProductTableAdminContext);
 
   useEffect(() => {
-    fetchProducts();
+    fetchProductsAdmin();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <MainLayout>{products && <ProductsTable products={products} />}</MainLayout>
+    <MainLayout>
+      {productsAdmin && <ProductsTableAdmin products={productsAdmin} />}
+    </MainLayout>
   );
 };
 

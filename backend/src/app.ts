@@ -13,6 +13,7 @@ const corsOptions = {
   origin: ['http://localhost:5173'],
   credentials: true,
   exposedHeaders: ['set-cookie'],
+  secure: true,
 };
 
 const app = express();
